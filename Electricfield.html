@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYSICS - ELECTRIC FIELD</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#02142e,#04285a,#0a4ea8);
+color:white;
+overflow-x:hidden;
+position:relative;
+}
+
+/* Animated Particles */
+.particle{
+position:fixed;
+width:4px;
+height:4px;
+background:rgba(255,255,255,0.7);
+border-radius:50%;
+animation:floatParticle linear infinite;
+z-index:-1;
+}
+
+@keyframes floatParticle{
+from{
+transform:translateY(100vh);
+opacity:0;
+}
+20%{opacity:1;}
+to{
+transform:translateY(-100vh);
+opacity:0;
+}
+}
+
+/* Physics Background */
+.physics-bg{
+position:fixed;
+inset:0;
+overflow:hidden;
+z-index:-2;
+pointer-events:none;
+}
+
+.atom,.charge,.formula-bg{
+position:absolute;
+color:rgba(255,255,255,0.08);
+animation:drift 20s linear infinite;
+}
+
+.atom{
+font-size:70px;
+}
+
+.charge{
+font-size:50px;
+font-weight:bold;
+}
+
+.formula-bg{
+font-size:30px;
+}
+
+@keyframes drift{
+0%{transform:translateY(0px) rotate(0deg);}
+50%{transform:translateY(-40px) rotate(180deg);}
+100%{transform:translateY(0px) rotate(360deg);}
+}
+
+/* Navbar */
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:15px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+z-index:999;
+border-bottom:1px solid rgba(255,255,255,0.15);
+}
+
+.logo{
+font-size:1.2rem;
+font-weight:700;
+color:#7fd8ff;
+}
+
+nav ul{
+display:flex;
+list-style:none;
+gap:20px;
+}
+
+nav a{
+text-decoration:none;
+color:white;
+transition:.3s;
+}
+
+nav a:hover{
+color:#7fd8ff;
+}
+
+/* Hero */
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:100px 20px;
+}
+
+.hero-content{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+padding:50px;
+border-radius:25px;
+max-width:900px;
+box-shadow:0 0 30px rgba(0,255,255,0.15);
+}
+
+.hero h1{
+font-size:3rem;
+margin-bottom:15px;
+color:#8fe9ff;
+}
+
+.hero p{
+font-size:1.2rem;
+opacity:.9;
+}
+
+/* Physics Fact */
+.fact-box{
+position:fixed;
+right:20px;
+bottom:90px;
+width:240px;
+padding:15px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(12px);
+border-radius:18px;
+border:1px solid rgba(255,255,255,0.2);
+z-index:50;
+box-shadow:0 0 20px rgba(0,255,255,.2);
+}
+
+.fact-box h4{
+color:#8fe9ff;
+margin-bottom:8px;
+}
+
+/* Sections */
+section{
+padding:100px 10%;
+}
+
+.section-title{
+font-size:2rem;
+margin-bottom:30px;
+color:#8fe9ff;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.glass{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+padding:30px;
+border-radius:25px;
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 0 20px rgba(0,255,255,.08);
+}
+
+.glass:hover{
+transform:translateY(-5px);
+transition:.4s;
+}
+
+/* Formula Cards */
+.formula-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:25px;
+}
+
+.formula-card{
+background:rgba(255,255,255,0.08);
+padding:25px;
+border-radius:20px;
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.15);
+box-shadow:0 0 25px rgba(0,255,255,.25);
+transition:.4s;
+}
+
+.formula-card:hover{
+transform:scale(1.03);
+}
+
+.formula{
+font-size:2rem;
+text-align:center;
+margin-bottom:15px;
+color:#8fe9ff;
+text-shadow:0 0 20px #4be4ff;
+}
+
+/* Applications */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+padding:25px;
+border-radius:20px;
+transition:.4s;
+border:1px solid rgba(255,255,255,.15);
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 25px rgba(0,255,255,.25);
+}
+
+.card h3{
+margin-bottom:10px;
+color:#8fe9ff;
+}
+
+/* SVG */
+.svg-container{
+display:flex;
+justify-content:center;
+margin-top:30px;
+}
+
+svg{
+max-width:100%;
+}
+
+/* Did You Know */
+.did-you-know{
+text-align:center;
+font-size:1.1rem;
+}
+
+/* Footer */
+footer{
+text-align:center;
+padding:40px 20px;
+background:rgba(255,255,255,0.05);
+margin-top:50px;
+}
+
+/* Reveal Animation */
+.reveal{
+opacity:0;
+transform:translateY(50px);
+transition:1s;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
+/* Back To Top */
+#topBtn{
+position:fixed;
+bottom:20px;
+right:20px;
+border:none;
+padding:12px 16px;
+border-radius:50%;
+background:#1dbfff;
+color:white;
+cursor:pointer;
+font-size:18px;
+display:none;
+box-shadow:0 0 20px rgba(0,255,255,.4);
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:2rem;
+}
+
+nav{
+flex-direction:column;
+gap:10px;
+}
+
+nav ul{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.fact-box{
+width:200px;
+font-size:.9rem;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="physics-bg">
+<div class="atom" style="top:10%;left:8%;">⚛</div>
+<div class="atom" style="top:70%;left:85%;">⚛</div>
+<div class="charge" style="top:20%;left:75%;">+</div>
+<div class="charge" style="top:55%;left:10%;">−</div>
+<div class="formula-bg" style="top:40%;left:80%;">E = F/q</div>
+<div class="formula-bg" style="top:80%;left:20%;">E = kQ/r²</div>
+<div class="formula-bg" style="top:15%;left:45%;">∇·E</div>
+</div>
+
+<nav>
+<div class="logo">⚛ Physics Learning</div>
+<ul>
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#formula">Formula</a></li>
+<li><a href="#lines">Field Lines</a></li>
+<li><a href="#apps">Applications</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</nav>
+
+<div class="fact-box">
+<h4>⚡ Physics Fact</h4>
+<p>Electric fields travel at the speed of light.</p>
+</div>
+
+<section class="hero">
+<div class="hero-content reveal">
+<h1>PHYSICS - ELECTRIC FIELD</h1>
+<p>Understanding the invisible force surrounding electric charges.</p>
+</div>
+</section>
+
+<section id="intro" class="reveal">
+<h2 class="section-title">📘 ELECTRIC FIELD</h2>
+
+<div class="glass">
+<p>
+An Electric Field is the region around a charged object in which another charged object experiences an electric force. It is an important concept in electrostatics because it explains how charges can exert forces on each other without being in direct contact.
+<br><br>
+Whenever a charge is placed in space, it creates an electric field around itself. If another charge enters this field, it will experience either an attractive or repulsive force depending on the nature of the charges involved. Like charges repel each other, while unlike charges attract each other.
+<br><br>
+The strength of an electric field at a point is defined as the force experienced by a unit positive test charge placed at that point. The electric field is a vector quantity, meaning it has both magnitude and direction. The direction of the electric field is the direction in which a positive test charge would move.
+</p>
+</div>
+</section>
+
+<section id="formula" class="reveal">
+<h2 class="section-title">🧮 Formula Section</h2>
+
+<div class="formula-grid">
+
+<div class="formula-card">
+<div class="formula">E = F / q</div>
+<p><strong>E</strong> = Electric field strength (N/C)</p>
+<p><strong>F</strong> = Electric force acting on the test charge (N)</p>
+<p><strong>q</strong> = Magnitude of the test charge (C)</p>
+</div>
+
+<div class="formula-card">
+<div class="formula">E = kQ / r²</div>
+<p><strong>k</strong> = Coulomb's constant</p>
+<p><strong>Q</strong> = Source charge</p>
+<p><strong>r</strong> = Distance from the charge</p>
+</div>
+
+</div>
+</section>
+
+<section id="lines" class="reveal">
+<h2 class="section-title">🌀 Electric Field Lines</h2>
+
+<div class="glass">
+<ul style="line-height:2;">
+<li>Field lines originate from positive charges and terminate on negative charges.</li>
+<li>The closer the lines are to each other, the stronger the electric field.</li>
+<li>Field lines never intersect.</li>
+<li>The tangent to a field line at any point gives the direction of the electric field at that point.</li>
+</ul>
+
+<div class="svg-container">
+
+<svg width="600" height="260" viewBox="0 0 600 260">
+
+<circle cx="170" cy="130" r="22" fill="#4cff9d"/>
+<text x="163" y="138" fill="black" font-size="22">+</text>
+
+<circle cx="430" cy="130" r="22" fill="#ff5f7d"/>
+<text x="424" y="138" fill="black" font-size="22">−</text>
+
+<path d="M190 110 C250 40 350 40 410 110"
+stroke="#8fe9ff"
+stroke-width="3"
+fill="none"/>
+
+<path d="M190 150 C250 220 350 220 410 150"
+stroke="#8fe9ff"
+stroke-width="3"
+fill="none"/>
+
+<path d="M190 130 C260 130 340 130 410 130"
+stroke="#8fe9ff"
+stroke-width="3"
+fill="none"/>
+
+</svg>
+
+</div>
+</div>
+</section>
+
+<section id="apps" class="reveal">
+<h2 class="section-title">🔬 Applications of Electric Fields</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>🖨 Photocopiers & Laser Printers</h3>
+<p>Use electrostatic charges to attract toner particles and create images on paper.</p>
+</div>
+
+<div class="card">
+<h3>🏭 Electrostatic Precipitators</h3>
+<p>Remove dust and smoke particles from industrial exhaust gases.</p>
+</div>
+
+<div class="card">
+<h3>📺 Cathode Ray Tubes</h3>
+<p>Electric fields control electron beams in older television and display systems.</p>
+</div>
+
+<div class="card">
+<h3>⚛ Particle Accelerators</h3>
+<p>Accelerate charged particles to high speeds for scientific research.</p>
+</div>
+
+<div class="card">
+<h3>🔋 Capacitors & Circuits</h3>
+<p>Store electrical energy and play vital roles in modern electronic devices.</p>
+</div>
+
+</div>
+</section>
+
+<section class="reveal">
+<h2 class="section-title">💡 Did You Know?</h2>
+
+<div class="glass did-you-know">
+Electric field lines always point away from positive charges and toward negative charges. The concept of electric fields helps scientists understand how forces act even through empty space.
+</div>
+</section>
+
+<section id="conclusion" class="reveal">
+<h2 class="section-title">📖 Conclusion</h2>
+
+<div class="glass">
+<p>
+The electric field is a fundamental concept in physics that describes the influence of electric charges in the space around them. Understanding electric fields helps explain many electrical phenomena and forms the foundation for advanced topics such as electric potential, Gauss's law, and capacitance.
+</p>
+</div>
+</section>
+
+<footer>
+<h3>Created for Physics Learning</h3>
+<p>Explore More Physics Topics</p>
+</footer>
+
+<button id="topBtn">↑</button>
+
+<script>
+
+/* Create Particles */
+for(let i=0;i<60;i++){
+let p=document.createElement('div');
+p.classList.add('particle');
+p.style.left=Math.random()*100+'vw';
+p.style.animationDuration=(8+Math.random()*12)+'s';
+p.style.animationDelay=Math.random()*5+'s';
+document.body.appendChild(p);
+}
+
+/* Scroll Reveal */
+const reveals=document.querySelectorAll('.reveal');
+
+function reveal(){
+reveals.forEach(r=>{
+const top=r.getBoundingClientRect().top;
+if(top < window.innerHeight-100){
+r.classList.add('active');
+}
+});
+}
+
+window.addEventListener('scroll',reveal);
+reveal();
+
+/* Back To Top */
+const btn=document.getElementById("topBtn");
+
+window.onscroll=function(){
+if(document.documentElement.scrollTop>300){
+btn.style.display="block";
+}else{
+btn.style.display="none";
+}
+};
+
+btn.onclick=function(){
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+};
+
+</script>
+
+</body>
+</html>
